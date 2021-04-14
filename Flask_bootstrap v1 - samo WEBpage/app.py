@@ -1,4 +1,7 @@
 from flask import Flask, render_template, redirect, request
+import asyncio
+from bleak import BleakClient, BleakScanner
+from bleak.exc import BleakError
 
 app = Flask(__name__)
 
