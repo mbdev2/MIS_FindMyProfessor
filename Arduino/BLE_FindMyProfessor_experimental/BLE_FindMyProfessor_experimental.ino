@@ -46,7 +46,7 @@ BLEService probabilityService("180F");
 //BLE Probability Characteristics
 BLEDoubleCharacteristic probabilityChar("2A19", BLERead | BLENotify);
 
-double probability = 0.0; // init za probability spremenjlivko
+int probability = 0; // init za probability spremenjlivko
 
 long previousMillis = 0;  // last time the battery level was checked, in ms
 /**
@@ -158,7 +158,7 @@ void updateProbabilityLevel() {
     for (size_t ix = 0; ix < EI_CLASSIFIER_LABEL_COUNT; ix++) {
         ei_printf("    %s: %.5f\n", result.classification[ix].label, result.classification[ix].value);
     }
-    print((int)(100*result.classification[1].value))
+    ei_printf("%d",(int)(100*result.classification[1].value));
     probabilityChar.writeValue((int)(100*result.classification[1].value));
     
 #if EI_CLASSIFIER_HAS_ANOMALY == 1

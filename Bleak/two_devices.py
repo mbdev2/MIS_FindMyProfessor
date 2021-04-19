@@ -1,12 +1,14 @@
 from bleak import BleakClient
 import asyncio
 import functools
+import struct
 
 notify_uuid = "00002a19-0000-1000-8000-00805f9b34fb".format(0x2A19)
 
 
 def callback(sender, data, mac_address):
-    print(mac_address, data)
+    dataint = int.from_bytes(data, byteorder='big', signed=False)
+    print(mac_address, dataint)
 
 def run(addresses):
     loop = asyncio.get_event_loop()
