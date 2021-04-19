@@ -6,8 +6,7 @@ notify_uuid = "00002a19-0000-1000-8000-00805f9b34fb".format(0x2A19)
 
 
 def callback(sender, data, mac_address):
-    print(mac_address,"PISANJE:", data)
-
+    print(mac_address, data)
 
 def run(addresses):
     loop = asyncio.get_event_loop()
@@ -26,7 +25,7 @@ async def connect_to_device(address):
 
             #model_number = await client.read_gatt_char(address)
             await client.start_notify(notify_uuid, functools.partial(callback, mac_address=address))
-            await asyncio.sleep(100.0)
+            await asyncio.sleep(1000.0)
             await client.stop_notify(notify_uuid)
         except Exception as e:
             print(e)
