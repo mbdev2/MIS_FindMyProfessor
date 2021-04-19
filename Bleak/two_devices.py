@@ -1,7 +1,6 @@
 from bleak import BleakClient
 import asyncio
 import functools
-import struct
 
 notify_uuid = "00002a19-0000-1000-8000-00805f9b34fb".format(0x2A19)
 
