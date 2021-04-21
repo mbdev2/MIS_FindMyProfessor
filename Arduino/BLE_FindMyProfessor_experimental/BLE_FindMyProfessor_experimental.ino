@@ -44,7 +44,7 @@ static bool debug_nn = false; // Set this to true to see e.g. features generated
 BLEService probabilityService("180F");
 
 //BLE Probability Characteristics
-BLEDoubleCharacteristic probabilityChar("2A19", BLERead | BLENotify);
+BLEIntCharacteristic probabilityChar("2A19", BLERead | BLENotify);
 
 int probability = 0; // init za probability spremenjlivko
 

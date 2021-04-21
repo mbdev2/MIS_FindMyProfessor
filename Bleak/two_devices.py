@@ -6,7 +6,8 @@ notify_uuid = "00002a19-0000-1000-8000-00805f9b34fb".format(0x2A19)
 
 
 def callback(sender, data, mac_address):
-    dataint = int.from_bytes(data, byteorder='big', signed=False)
+    #data = bytearray(data)
+    dataint = int.from_bytes(data, byteorder='little', signed=True)
     print(mac_address, dataint)
 
 def run(addresses):
@@ -19,7 +20,7 @@ def run(addresses):
 
 async def connect_to_device(address):
     print("starting", address, "loop")
-    async with BleakClient(address, timeout=5.0) as client:
+    async with BleakClient(address, timeout=10.0) as client:
 
         print("connect to", address)
         try:
