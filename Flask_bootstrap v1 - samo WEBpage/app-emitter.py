@@ -23,7 +23,7 @@ naprava2 = "D31CB0CA-890E-476B-80D9-80ED8A3AA69A"
 number1 = 0
 number2 = 0
 
-disconnectEvent = asyncio.Event()
+connectedEvent = asyncio.Event()
 
 #spremenimo flask app v socketio app
 socketio = SocketIO(app, async_mode=None, logger=True, engineio_logger=True)
@@ -62,7 +62,7 @@ async def connect_to_device(address):
         try:
             #model_number = await client.read_gatt_char(address)
             await client.start_notify(notify_uuid, functools.partial(callback, mac_address=address))
-            while not disconnectEvent.is_set():
+            while connectedEvent.is_set():
                 await asyncio.sleep(0.1)
             await client.stop_notify(notify_uuid)
         except Exception as e:
@@ -72,6 +72,8 @@ async def connect_to_device(address):
 
 @app.route("/") # route za osnovno stran
 def index():
+    connectedEvent.set()
+    print("Web client connected")
     return render_template('findmyprofessor.html') #vzame HTML template iz zunanje datoteke
 
 @socketio.on('connect', namespace='/test')
@@ -81,6 +83,7 @@ def test_connect():
     global naprava2 #zelimo uporabljati globalni thread
     global thread_stop_event
     print('Client connected')
+    connectedEvent.set()
 
 
     #ce ni ze zagnan, zazenemo thread z imenom randomNumberGenerator (torej basiclly klicemo funkcijo k se bo izvajala v niti)
@@ -95,7 +98,7 @@ def test_connect():
 def test_disconnect():
     global thread_stop_event
     thread_stop_event.set()
-    #disconnectEvent.set()
+    connectedEvent.clear()
     print('Client disconnected')
 
 if __name__ == '__main__':
