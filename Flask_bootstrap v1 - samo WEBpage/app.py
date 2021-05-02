@@ -11,6 +11,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 app.config['DEBUG'] = True
 
+thread = Thread()
+thread_stop_event = Event()
 #spremenimo flask app v socketio app
 socketio = SocketIO(app, async_mode=None, logger=True, engineio_logger=True)
 
@@ -34,12 +36,16 @@ def test_connect():
     global thread #zelimo uporabljati globalni thread
     global thread_stop_event
     print('Client connected')
-
+    if not thread.isAlive():
+        print("Starting Thread")
+        thread_stop_event.clear()
+        thread = socketio.start_background_task(randomNumberGenerator)
     #ce ni ze zagnan, zazenemo thread z imenom randomNumberGenerator (torej basiclly klicemo funkcijo k se bo izvajala v niti)
 
 @socketio.on('disconnect', namespace='/test')
 def test_disconnect():
     global thread_stop_event
+    thread_stop_event.set()
     print('Client disconnected')
 
 if __name__ == '__main__':
