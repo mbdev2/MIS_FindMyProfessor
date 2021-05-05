@@ -7,7 +7,45 @@ $(document).ready(function(){
       console.log(msg);
         console.log("Received number" + msg.number[0]);
         console.log("Received number" + msg.number[1]);
-        number_string = '<h3>Naprava 1: </h3>'+'<p>' + msg.number[0].toString() + '</p>'+ '</br>' +'<h3>Naprava 2: </h3>'+ '<p>' + msg.number[1].toString() + '</p>';
+        if (msg.number[0] > msg.number[1]){
+          number_string =
+          '<div class="row justify-content-center">'+
+          '<div class="col-lg-6 col-md-6 col-sm-12" style="padding-top: 40px; padding-right: 50px; padding-left: 50px">'+
+          '<img src="static/tabla.jpg" alt="Tabla" style="border:5px solid white" class="img-fluid">' +
+          '</div>'+
+          '<div class="col-lg-6 col-md-6 col-sm-12" style="padding-top: 40px; padding-right: 50px; padding-left: 50px">'+
+          //'<h3>Naprava 1: </h3>'+'<p>' + msg.number[0].toString() + '</p>'+ '</br>' +
+          '<img src="static/tabla2.jpg" alt="Tabla" class="img-fluid" style="opacity: 0.7">' +
+          //'<h3>Naprava 2: </h3>'+ '<p>' + msg.number[1].toString() + '</p>';
+          '</div>'+
+          '</div>'
+        }
+        else if (msg.number[0] < msg.number[1]){
+          number_string =
+          '<div class="row justify-content-center">'+
+          ' <div class="col-lg-6 col-md-6 col-sm-12"  style="padding-top: 40px; padding-right: 50px; padding-left: 50px">'+
+          '<img src="static/tabla.jpg" alt="Tabla" class="img-fluid" style="opacity: 0.7">' +
+          '</div>'+
+          '<div class="col-lg-6 col-md-6 col-sm-12"  style="padding-top: 40px; padding-right: 50px; padding-left: 50px">'+
+          //'<h3>Naprava 1: </h3>'+'<p>' + msg.number[0].toString() + '</p>'+ '</br>' +
+          '<img src="static/tabla2.jpg" alt="Tabla" style="border:5px solid white" class="img-fluid">' +
+          //'<h3>Naprava 2: </h3>'+ '<p>' + msg.number[1].toString() + '</p>';
+          '</div>'+
+          '</div>'
+        }
+        else{
+          number_string =
+          '<div class="row justify-content-center">'+
+          ' <div class="col-lg-6 col-md-6 col-sm-12"  style="padding-top: 40px; padding-right: 50px; padding-left: 50px">'+
+          '<img src="static/tabla.jpg" alt="Tabla" style="border:5px solid white" class="img-fluid">' +
+          '</div>'+
+          '<div class="col-lg-6 col-md-6 col-sm-12"  style="padding-top: 40px; padding-right: 50px; padding-left: 50px">'+
+          //'<h3>Naprava 1: </h3>'+'<p>' + msg.number[0].toString() + '</p>'+ '</br>' +
+          '<img src="static/tabla2.jpg" alt="Tabla" style="border:5px solid white" class="img-fluid">' +
+          //'<h3>Naprava 2: </h3>'+ '<p>' + msg.number[1].toString() + '</p>';
+          '</div>'+
+          '</div>'
+        }
         $('#log').html(number_string);
     });
 });
