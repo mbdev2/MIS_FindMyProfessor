@@ -55,8 +55,10 @@ def callback(sender, data, mac_address):
             statistikaDesna+=1
     else:
         statistikaNobena+=1
-
-    number=[number1, number2, statistikaLeva, statistikaDesna, statistikaNobena] #tale array posljemo preko sock emit na spletno stran
+    ravnotezen=statistikaLeva+statistikaDesna+statistikaNobena
+    leva=statistikaLeva*100/ravnotezen
+    desna=statistikaDesna*100/ravnotezen
+    number=[number1, number2, leva, desna, (100-leva-desna)] #tale array posljemo preko sock emit na spletno stran
     socketio.emit('newnumber', {'number': number}, namespace='/test')
 
 
