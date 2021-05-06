@@ -61,6 +61,31 @@ $(document).ready(function(){
 
         $('#char').html(char_string);
 
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+          var data = google.visualization.arrayToDataTable([
+            ['Task', 'Hours per Day'],
+            ['Tabla 1',     msg.number[2]],
+            ['Tabla 2',      msg.number[3]],
+            ['Brez',  msg.number[4]],
+          ]);
+
+          var options = {
+            title: 'Statistika Uporabe',
+            backgroundColor: { fill:'transparent' },
+            titleTextStyle: { color: 'white'},
+            legend: {textStyle: {color: 'white'}, alignment: 'center'}
+          };
+
+          var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+          chart.draw(data, options);
+        }
 
     });
+
+
 });
