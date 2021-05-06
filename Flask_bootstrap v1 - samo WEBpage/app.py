@@ -17,13 +17,29 @@ thread_stop_event = Event()
 socketio = SocketIO(app, async_mode=None, logger=True, engineio_logger=True)
 
 #omogocimo uporabo threada z knjizico
+statistikaLeva = 0
+statistikaDesna = 0
+statistikaNobena = 0
 
 def randomNumberGenerator():
     #infinite loop of magical random numbers
     while not thread_stop_event.isSet():
+        global statistikaLeva
+        global statistikaDesna
+        global statistikaNobena
         number1 = round(random()*100)
         number2 = round(random()*100)
-        number=[number1, number2] #tale array posljemo preko sock emit na spletno stran
+        if (number1 >60 or number2 >60):
+            if number1 > number2:
+                statistikaLeva+=1
+            else:
+                statistikaDesna+=1
+        else:
+            statistikaNobena+=1
+        ravnotezen=statistikaLeva+statistikaDesna+statistikaNobena
+        leva=statistikaLeva*100/ravnotezen
+        desna=statistikaDesna*100/ravnotezen
+        number=[number1, number2, leva, desna, (100-leva-desna)] #tale array posljemo preko sock emit na spletno stran
         socketio.emit('newnumber', {'number': number}, namespace='/test')
         socketio.sleep(5) #osvezimo na vsake 5 sec
 
