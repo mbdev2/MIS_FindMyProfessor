@@ -22,6 +22,9 @@ naprava2 = "D31CB0CA-890E-476B-80D9-80ED8A3AA69A"
 
 number1 = 0
 number2 = 0
+statistikaLeva = 0
+statistikaDesna = 0
+statistikaNobena = 0
 
 connectedEvent = asyncio.Event()
 
@@ -36,11 +39,24 @@ thread_stop_event = Event()
 def callback(sender, data, mac_address):
     global number1
     global number2
+    global statistikaLeva
+    global statistikaDesna
+    global statistikaNobena
     dataint = int.from_bytes(data, byteorder='little', signed=True)
     if(mac_address == naprava1):
         number1 = dataint
-    else: number2 = dataint
-    number=[number1, number2] #tale array posljemo preko sock emit na spletno stran
+    else:
+        number2 = dataint
+
+    if (number1 >60 or number2 >60):
+        if number1 > number2:
+            statistikaLeva+=1
+        else:
+            statistikaDesna+=1
+    else:
+        statistikaNobena+=1
+
+    number=[number1, number2, statistikaLeva, statistikaDesna, statistikaNobena] #tale array posljemo preko sock emit na spletno stran
     socketio.emit('newnumber', {'number': number}, namespace='/test')
 
 
