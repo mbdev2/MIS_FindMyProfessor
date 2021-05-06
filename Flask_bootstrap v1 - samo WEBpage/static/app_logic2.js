@@ -40,11 +40,11 @@ $(document).ready(function(){
           number_string =
           '<div class="row justify-content-center">'+
           ' <div class="col-lg-6 col-md-6 col-sm-12"  style="padding-top: 40px; padding-right: 50px; padding-left: 50px">'+
-          '<img src="static/tabla.jpg" alt="Tabla" style="border:5px solid white" class="img-fluid">' +
+          '<img src="static/tabla.jpg" alt="Tabla" style="opacity: 0.7" class="img-fluid">' +
           '</div>'+
           '<div class="col-lg-6 col-md-6 col-sm-12"  style="padding-top: 40px; padding-right: 50px; padding-left: 50px">'+
           //'<h3>Naprava 1: </h3>'+'<p>' + msg.number[0].toString() + '</p>'+ '</br>' +
-          '<img src="static/tabla2.jpg" alt="Tabla" style="border:5px solid white" class="img-fluid">' +
+          '<img src="static/tabla2.jpg" alt="Tabla" style="opacity: 0.7" class="img-fluid">' +
           //'<h3>Naprava 2: </h3>'+ '<p>' + msg.number[1].toString() + '</p>';
           '</div>'+
           '</div>'
@@ -52,11 +52,11 @@ $(document).ready(function(){
         $('#log').html(number_string);
 
         char_string =
-        '<div class="row justify-content-center">'+
-        '<h2>Statistika uporabe:</h2>'+
-        '<h4>Leva Tabla: ' + msg.number[2].toString() + '</h4>'+
-        '<h4>Desna Tabla: ' + msg.number[3].toString() + '</h4>'+
-        '<h4>Ni pisanja: ' + msg.number[4].toString() + '</h4>'+
+        '<div class="col justify-content-center">'+
+        '<br><h2>Statistika uporabe:</h2><br>'+
+        '<h4>Leva Tabla: ' + msg.number[2].toString() + '% </h4>'+
+        '<h4>Desna Tabla: ' + msg.number[3].toString() + '% </h4>'+
+        '<h4>Ni pisanja: ' + msg.number[4].toString() + '% </h4>'+
         '</div>'
 
         $('#char').html(char_string);
