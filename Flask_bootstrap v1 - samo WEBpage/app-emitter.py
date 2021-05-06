@@ -17,8 +17,11 @@ app.config['DEBUG'] = True
 #podatki za Bleak
 notify_uuid = "00002a19-0000-1000-8000-00805f9b34fb".format(0x2A19)
 
-naprava1 = "96E8409A-F2EB-4029-B3DC-615FADE0C838"
-naprava2 = "D31CB0CA-890E-476B-80D9-80ED8A3AA69A"
+### Za Linux in macOS UUID; za Windows MAC address
+#naprava1 = "96E8409A-F2EB-4029-B3DC-615FADE0C838"
+#naprava2 = "D31CB0CA-890E-476B-80D9-80ED8A3AA69A"
+naprava1 = "C2:97:1D:BD:47:1B"
+naprava2 = "F4:FB:70:D5:CF:55"
 
 number1 = 0
 number2 = 0
