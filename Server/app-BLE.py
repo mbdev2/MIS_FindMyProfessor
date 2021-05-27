@@ -1,5 +1,4 @@
 import threading
-
 from flask import Flask, render_template, redirect, request
 import asyncio
 from flask_socketio import SocketIO, emit
@@ -15,21 +14,22 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 app.config['DEBUG'] = True
 
-#podatki za Bleak
+#MAC or UUID (based on whether you use Mac or Windows) for our Bleak connection over BLE to Arduinos
 notify_uuid = "00002a19-0000-1000-8000-00805f9b34fb".format(0x2A19)
 
-naprava1 = (
+naprava1 = ( #device1
     "C2:97:1D:BD:47:1B"
     if platform.system() != "Darwin"
     else "96E8409A-F2EB-4029-B3DC-615FADE0C838"
 )
 
-naprava2 = (
+naprava2 = ( #device2
     "F4:FB:70:D5:CF:55"
     if platform.system() != "Darwin"
     else "D31CB0CA-890E-476B-80D9-80ED8A3AA69A"
 )
 
+#our global data variables for statistics
 number1 = 0
 number2 = 0
 statistikaLeva = 0
@@ -38,12 +38,11 @@ statistikaNobena = 0
 
 connectedEvent = asyncio.Event()
 
-#spremenimo flask app v socketio app
+#we transfrom our FLask app into a SocketIO app
 socketio = SocketIO(app, async_mode=None, logger=True, engineio_logger=True)
 
-#omogocimo uporabo threada z knjizico
+#we enable the use of threads using the thread library
 thread = None
-#thread2 = Thread()
 thread_stop_event = Event()
 
 def callback(sender, data, mac_address):
@@ -57,7 +56,7 @@ def callback(sender, data, mac_address):
         number1 = dataint
     else:
         number2 = dataint
-
+    #our logical to decide which blackboard is being written on
     if (number1 >60 or number2 >60):
         if number1 > number2:
             statistikaLeva+=1
@@ -68,7 +67,7 @@ def callback(sender, data, mac_address):
     ravnotezen=statistikaLeva+statistikaDesna+statistikaNobena
     leva=int(statistikaLeva*100/ravnotezen)
     desna=int(statistikaDesna*100/ravnotezen)
-    number=[number1, number2, leva, desna, (100-leva-desna)] #tale array posljemo preko sock emit na spletno stran
+    number=[number1, number2, leva, desna, (100-leva-desna)] #we transmit this array over SocketIO
     socketio.emit('newnumber', {'number': number}, namespace='/test')
 
 
@@ -98,27 +97,26 @@ async def connect_to_device(address):
     print("disconnect from", address)
 
 
-@app.route("/") # route za osnovno stran
+@app.route("/") # homepage route
 def index():
     connectedEvent.set()
     print("Web client connected")
-    return render_template('findmyprofessor.html') #vzame HTML template iz zunanje datoteke
+    return render_template('findmyprofessor.html') #external HTML use
 
 @socketio.on('connect', namespace='/test')
 def test_connect():
     global thread
     global naprava1
-    global naprava2 #zelimo uporabljati globalni thread
+    global naprava2
     global thread_stop_event
     print('Client connected')
     connectedEvent.set()
 
 
-    #ce ni ze zagnan, zazenemo thread z imenom randomNumberGenerator (torej basiclly klicemo funkcijo k se bo izvajala v niti)
+    #if the thread is not yet started, we basically create a new one to "multitask" BLE connections while still listening for requests in our main app
     if not thread or not thread.is_alive():
         print("Starting Thread from ",threading.current_thread().ident,threading.current_thread().name)
         thread_stop_event.clear()
-        #thread = socketio.start_background_task(run([naprava1,naprava2]))
         thread = Thread(target=functools.partial(run,[naprava1,naprava2]),name="BLEthread")
         thread.start()
 
