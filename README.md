@@ -28,6 +28,7 @@ FindMyProfessor uses a number of open source and production projects to work pro
 - Flask: Enables us to serve HTML websites from Python!
 - Flask SocketIO: Refresh data dynamically with sockets, no bullshit required
 - EdgeImpulse: Simply the easiest and most powerful online ML model designer, hats off!
+- Arduino Nano 33 BLE: A tiny, affordable and connected IoT board with TensorFlow capabilities.
 
 And of course FindMyProfessor itself is open source!
 
