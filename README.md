@@ -1,5 +1,7 @@
 # FindMyProfessor
 ## _Turn scriblles into words!_
+![IMG_7240](https://user-images.githubusercontent.com/72226231/120156122-f1075200-c1f1-11eb-8e7c-4b92b1e53911.jpeg)
+
 
 Tired of reading tiny scribbles on Zoom lectures? No worries, our solution enables PTZ cameras to auto-follow your professors' location.
 
@@ -14,6 +16,9 @@ We would like to express a deep thank you to our mentor Luka Mali, who helped us
 - Share a cloud-synced shopping list with your housemates
 - Intuitively pay-back what you own
 - Play around with various color choices!
+
+<img width="1671" alt="WebUI for the FindMyProfessor interface" src="https://user-images.githubusercontent.com/72226231/120156113-eea4f800-c1f1-11eb-9300-ed6476161262.png">
+
 
 ## Tech
 
